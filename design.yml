@@ -1,0 +1,157 @@
+# Store Management System Design
+version: 1.0
+description: |
+  A comprehensive store management system designed to track product inventory, record sales, manage expenses, handle credits, debts, and purchases. 
+  The system ensures seamless inventory adjustments, real-time sales tracking, and financial management for efficient store operations.
+
+storyline: |
+  The store management system is designed to help store owners and managers efficiently manage their operations. 
+  It allows users to:
+  - Track product inventory in real-time.
+  - Record sales transactions.
+  - Perform inventory adjustments (e.g., stock additions, returns, or write-offs).
+  - Record expenses such as rent, utilities, and salaries.
+  - Manage credits, debts, and customer accounts.
+  - Track purchases from suppliers and manage supplier relationships.
+  The system provides actionable insights through reports and dashboards, enabling data-driven decision-making.
+
+models:
+  - name: Product
+    attributes:
+      - id: string
+      - name: string
+      - description: string
+      - price: float
+      - quantity_in_stock: integer
+      - category: string
+      - created_at: datetime
+      - updated_at: datetime
+
+  - name: Sale
+    attributes:
+      - id: string
+      - product_id: string
+      - quantity_sold: integer
+      - total_amount: float
+      - sale_date: datetime
+      - payment_method: string
+      - created_at: datetime
+
+  - name: Expense
+    attributes:
+      - id: string
+      - description: string
+      - amount: float
+      - category: string
+      - expense_date: datetime
+      - created_at: datetime
+
+  - name: Credit
+    attributes:
+      - id: string
+      - customer_id: string
+      - amount_owed: float
+      - amount_paid: float
+      - due_date: datetime
+      - status: string
+      - created_at: datetime
+
+  - name: Purchase
+    attributes:
+      - id: string
+      - supplier_id: string
+      - product_id: string
+      - quantity_purchased: integer
+      - total_amount: float
+      - purchase_date: datetime
+      - created_at: datetime
+
+test_cases:
+  - name: Add Product to Inventory
+    steps:
+      - Navigate to the "Products" section.
+      - Click "Add Product".
+      - Fill in product details (name, description, price, quantity, category, supplier).
+      - Save the product.
+    expected_result: The product is added to the inventory and appears in the product list.
+
+  - name: Record a Sale
+    steps:
+      - Navigate to the "Sales" section.
+      - Click "New Sale".
+      - Select a product and enter the quantity sold.
+      - Enter customer details and payment method.
+      - Complete the sale.
+    expected_result: The sale is recorded, inventory is updated, and a receipt is generated.
+
+  - name: Perform Inventory Adjustment
+    steps:
+      - Navigate to the "Inventory" section.
+      - Select a product for adjustment.
+      - Enter the new quantity or reason for adjustment (e.g., damaged goods).
+      - Save the adjustment.
+    expected_result: The product's inventory quantity is updated, and the adjustment is logged.
+
+  - name: Record an Expense
+    steps:
+      - Navigate to the "Expenses" section.
+      - Click "Add Expense".
+      - Fill in expense details (description, amount, category, date).
+      - Save the expense.
+    expected_result: The expense is recorded and appears in the expense report.
+
+  - name: Manage Customer Credit
+    steps:
+      - Navigate to the "Credits" section.
+      - Select a customer.
+      - Enter the amount owed or paid.
+      - Update the credit status.
+    expected_result: The customer's credit balance is updated, and the transaction is logged.
+
+scenarios:
+  - name: Low Stock Alert
+    description: |
+      The system should alert the store manager when a product's inventory falls below a predefined threshold.
+    steps:
+      - A product's quantity_in_stock drops below the threshold.
+      - The system sends an alert to the manager via email or dashboard notification.
+    expected_result: The manager is notified and can take action to reorder the product.
+
+  - name: End-of-Day Sales Report
+    description: |
+      The system should generate a daily sales report summarizing total sales, revenue, and popular products.
+    steps:
+      - At the end of the day, the system aggregates all sales transactions.
+      - The system generates a report with total sales, revenue, and top-selling products.
+    expected_result: The report is available in the "Reports" section for review.
+
+  - name: Supplier Purchase Order
+    description: |
+      The system should allow the manager to create a purchase order for a supplier when inventory is low.
+    steps:
+      - The manager selects a product with low stock.
+      - The system suggests a supplier and default order quantity.
+      - The manager confirms the purchase order.
+    expected_result: The purchase order is sent to the supplier, and the system logs the transaction.
+
+  - name: Customer Debt Reminder
+    description: |
+      The system should send a reminder to customers with overdue debts.
+    steps:
+      - A customer's credit due date passes without payment.
+      - The system sends an automated reminder email or SMS.
+    expected_result: The customer is reminded of their overdue debt, and the system logs the reminder.
+
+  - name: Expense Analysis
+    description: |
+      The system should provide an analysis of expenses by category for a given period.
+    steps:
+      - The manager selects a date range and expense category.
+      - The system generates a report showing total expenses and trends.
+    expected_result: The manager can analyze expenses and identify areas for cost reduction.
+
+notes: |
+  - Ensure all models have proper validation to prevent invalid data entry.
+  - Implement role-based access control to restrict sensitive operations to authorized users.
+  - Regularly back up the database to prevent data loss.
+  - Provide training for store staff to ensure proper use of the system.
